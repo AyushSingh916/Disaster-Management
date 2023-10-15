@@ -16,10 +16,29 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-# Initialize the Twilio client with your account SID and authentication token
-client = Client(
-    "ACf2494ab3a07460275fd6ee36411b1c15", "7e1bf68864242a870e849716f8790c50"
-)
+# Function to read Twilio credentials from the password file
+def read_twilio_credentials(filename="password.txt"):
+    twilio_credentials = {}
+    try:
+        with open(filename, "r") as file:
+            for line in file:
+                key, value = line.strip().split(": ")
+                twilio_credentials[key] = value
+        return twilio_credentials
+    except FileNotFoundError:
+        return None
+
+# Read Twilio credentials from the password file
+twilio_auth = read_twilio_credentials()
+if not twilio_auth or "TWILIO_CLIENT_SID" not in twilio_auth or "TWILIO_AUTH_TOKEN" not in twilio_auth:
+    raise Exception("Twilio credentials not found in password file")
+
+# Extract Twilio Account SID and Auth Token
+account_sid = twilio_auth["TWILIO_CLIENT_SID"]
+auth_token = twilio_auth["TWILIO_AUTH_TOKEN"]
+
+# Create a Twilio client
+client = Client(account_sid, auth_token)
 
 
 # Function to send an SMS
@@ -30,8 +49,10 @@ def send_sms(recipient_number, message):
             from_="+17606218054",  # Use your Twilio phone number
             body=message,
         )
+        print(f"Message sent to {recipient_number} successfully.")
         return f"Message sent to {recipient_number} successfully."
     except Exception as e:
+        print(f"Message sending to {recipient_number} failed: {str(e)}")
         return f"Message sending to {recipient_number} failed: {str(e)}"
 
 
