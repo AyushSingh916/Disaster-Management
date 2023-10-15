@@ -2,7 +2,7 @@
 password.txt
 
 # Ignore phone number file
-phone_number.txt
+phone_numbers_data.txt
 
 # Ignore test script
-test.py
+test_messaging.py

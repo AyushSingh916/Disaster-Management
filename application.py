@@ -57,7 +57,7 @@ def send_sms(recipient_number, message):
 
 
 # Read phone numbers from the text file
-with open("phone_numbers.txt", "r") as file:
+with open("phone_numbers_data.txt", "r") as file:
     phone_numbers = file.read().splitlines()
 
 
