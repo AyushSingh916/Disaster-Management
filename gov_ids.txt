@@ -1,0 +1,5 @@
+
+usernames=["earthquakeagencyofindia","hurricaneagencyofindia","floodagencyofindia","disastermanagementagencyofindia"]
+
+passwords=["eaoi","haoi","faoi","dmaoi"]
+
