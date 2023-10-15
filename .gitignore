@@ -1,3 +1,8 @@
+# Ignore password file
 password.txt
+
+# Ignore phone number file
 phone_number.txt
+
+# Ignore test script
 test.py
